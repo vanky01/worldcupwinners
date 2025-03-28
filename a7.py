@@ -8,6 +8,7 @@ world_cup = pd.DataFrame({
     "Runners-up": ["Argentina", "Czech Republic", "Hungary", "Brazil", "Hungary", "Sweden", "Czech Republic", "Germany", "Italy", "Netherlands", "Netherlands", "Germany", "Germany", "Argentina", "Italy", "Brazil", "Germany", "France", "Netherlands", "Argentina", "Croatia", "France"]
 })
 app = Dash(__name__)
+server = app.server
 
 app.layout = html.Div([
     html.H1('World Cup Winners', style={'textAlign': 'center'}),
