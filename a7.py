@@ -7,9 +7,7 @@ world_cup = pd.DataFrame({
     "Winners": ["Uruguay", "Italy", "Italy", "Uruguay", "Germany", "Brazil", "Brazil", "United Kingdom", "Brazil", "Germany", "Argentina", "Italy", "Argentina", "Germany", "Brazil", "France", "Brazil", "Italy", "Spain", "Germany", "France", "Argentina"],
     "Runners-up": ["Argentina", "Czech Republic", "Hungary", "Brazil", "Hungary", "Sweden", "Czech Republic", "Germany", "Italy", "Netherlands", "Netherlands", "Germany", "Germany", "Argentina", "Italy", "Brazil", "Germany", "France", "Netherlands", "Argentina", "Croatia", "France"]
 })
-
 app = Dash(__name__)
-server = app.server
 
 app.layout = html.Div([
     html.H1('World Cup Winners', style={'textAlign': 'center'}),
@@ -29,7 +27,7 @@ app.layout = html.Div([
     dcc.Dropdown(
         id='country_dropdown',
         options=[{'label': c, 'value': c} for c in sorted(world_cup['Winners'].unique())],
-        value='Brazil'
+        value='Argentina'
     ),
     html.Div(id='country_win_output'),
 
@@ -53,10 +51,27 @@ def update_map(selected_value):
     counts = world_cup[selected_value].value_counts().reset_index()
     counts.columns = ['Country', 'Count']
 
+    country_to_iso = {
+        'Uruguay': 'URY',
+        'Italy': 'ITA',
+        'Germany': 'DEU',
+        'Brazil': 'BRA',
+        'Argentina': 'ARG',
+        'France': 'FRA',
+        'United Kingdom': 'GBR',
+        'Spain': 'ESP',
+        'Netherlands': 'NLD',
+        'Hungary': 'HUN',
+        'Sweden': 'SWE',
+        'Czech Republic': 'CZE',
+        'Croatia': 'HRV'
+    }
+    counts['iso_alpha'] = counts['Country'].map(country_to_iso)
+
     fig = px.choropleth(
         counts,
-        locations='Country',
-        locationmode='country names',
+        locations='iso_alpha',
+        hover_name='Country',
         color='Count',
         color_continuous_scale="Plasma",
         title=f'World Cup {selected_value} and Total World Cup Wins'
