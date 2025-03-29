@@ -69,6 +69,7 @@ def update_map(selected_value):
     }
     counts['iso_alpha'] = counts['Country'].map(country_to_iso)
     counts = counts.dropna(subset=['iso_alpha'])
+    counts = counts[~counts['iso_alpha'].isin(['GBR'])]
 
     print("Counts being used for choropleth:\n", counts)
 
