@@ -68,6 +68,7 @@ def update_map(selected_value):
         'Croatia': 'HRV'
     }
     counts['iso_alpha'] = counts['Country'].map(country_to_iso)
+    counts = counts.dropna(subset=['iso_alpha'])
 
     fig = px.choropleth(
         counts,
@@ -100,4 +101,4 @@ def update_year_output(selected_year):
  
 
 if __name__ == '__main__':
-    app.run_server(debug=True)
+    app.run_server(debug=False, host='0.0.0.0', port=8080)
