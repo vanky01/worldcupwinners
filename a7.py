@@ -67,6 +67,7 @@ def update_map(selected_value):
         'Czech Republic': 'CZE',
         'Croatia': 'HRV'
     }
+    counts['Country'] = counts['Country'].str.strip()
     counts['iso_alpha'] = counts['Country'].map(country_to_iso)
     counts = counts.dropna(subset=['iso_alpha'])
     counts = counts[~counts['iso_alpha'].isin(['GBR'])]
@@ -79,7 +80,12 @@ def update_map(selected_value):
         hover_name='Country',
         color='Count',
         color_continuous_scale="Plasma",
+        range_color=(1, counts['Count'].max()),
         title=f'World Cup {selected_value} and Total World Cup Wins'
+    )
+    fig.update_geos(
+        showcountries=True,
+        projection_type="natural earth"
     )
     return fig
 
