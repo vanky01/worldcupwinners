@@ -70,6 +70,8 @@ def update_map(selected_value):
     counts['iso_alpha'] = counts['Country'].map(country_to_iso)
     counts = counts.dropna(subset=['iso_alpha'])
 
+    print("Counts being used for choropleth:\n", counts)
+
     fig = px.choropleth(
         counts,
         locations='iso_alpha',
