@@ -3,3 +3,4 @@ pandas
 plotly
 gunicorn
 Flask==2.2.5
+setuptools
